@@ -1,0 +1,50 @@
+docker run -d --name config-server-container --network quiz-network -p 8888:8888 config-server-image:v1
+
+docker run -d --name service-registery-container --network quiz-network --env-file .env-dev -p 8761:8761 service-registery-image:v1
+
+docker run -d --name questionsdb-container --network quiz-network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=mahsan -e POSTGRES_DB=questionsdb -v C:\Users\ahsan\OneDrive\Desktop\questions-sql-script:/docker-entrypoint-initdb.d -p 5432:5432 postgres:17
+
+docker run -d --name questions-service-container --network quiz-network --env-file .env-dev -p 8081:8081 questions-service-image:v1
+
+### Altering questionsdb properties ###
+// To connect to docker database container
+docker exec -it questionsdb-container psql -U postgres -d questionsdb
+
+//Alter the column property to auto increment for existing questions_table inside container
+create sequence qt_seq;
+alter table questions_table alter column q_id set default nextval('qt_seq');
+alter sequence qt_seq owned by questions_table.q_id;
+\d questions_table
+
+                              Table "public.questions_table"
+   Column    |          Type          | Collation | Nullable |           Default
+-------------+------------------------+-----------+----------+-----------------------------
+ q_id        | integer                |           | not null | nextval('qt_seq'::regclass)
+ answer      | integer                |           |          |
+                                   Table "public.options_table"
+
+//Alter the column property to auto increment for existing options_table inside container
+create sequence ot_seq;
+alter table options_table alter column id set default nextval('ot_seq');
+alter sequence ot_seq owned by options_table.id;
+\d options_table
+
+                                   Table "public.options_table"
+       Column       |          Type          | Collation | Nullable |           Default
+--------------------+------------------------+-----------+----------+-----------------------------
+ id                 | integer                |           | not null | nextval('ot_seq'::regclass)
+ option_number      | integer                |           |          |
+ q_id               | integer                |           |          |
+ option_description | character varying(255) |           | not null |
+
+### Running quizDb Container from postgres:17 image ###
+docker run -d --name quizdb-container --network quiz-network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=mahsan -e POSTGRES_DB=quizdb -v C:\Users\ahsan\OneDrive\Desktop\quiz-sql-script:/docker-entrypoint-initdb.d -p 5430:5432 postgres:17
+
+docker run -d --name quiz-service-container --network quiz-network --env-file .env-dev -p 8083:8083 quiz-service-image:v1
+
+docker build -t api-gateway-image:v1 .
+docker run -d --name api-gateway-container --network quiz-network --env-file .env-dev -p 8765:8765 api-gateway-image:v1
+
+
+
+

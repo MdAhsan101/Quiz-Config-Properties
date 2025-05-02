@@ -1,0 +1,59 @@
+{
+  "options": [
+    {"optionNumber":1,"optionDescription":"Yes"},
+    {"optionNumber":2,"optionDescription":"No"}  ],
+  "answer": 1,
+  "qDescription": "Which operator is used for equality comparison in Java",
+  "qCategory": "Java",
+  "qMarks": 2
+}
+
+{
+  "options": [
+    {"optionNumber":1,"optionDescription":"null"},
+    {"optionNumber":2,"optionDescription":"void"}  ],
+  "qDescription": "What is the return type of a method that does not return any value?",
+  "qCategory": "Java",
+  "qMarks": 3,
+  "answer": 2
+}
+
+{
+  "options": [
+    {"optionNumber":1,"optionDescription":"int 1variable;"},
+    {"optionNumber":2,"optionDescription":"float myFloat=5.6"}  ],
+  "answer": 2,
+  "qDescription": "Which of the following is a valid variable declaration in Java?",
+  "qCategory": "Java",
+  "qMarks": 3
+}
+
+{
+  "options": [
+    {"optionNumber":1,"optionDescription":"enum DAYS {MON, TUE, WED, THU, FRI, SAT, SUN}"},
+    {"optionNumber":2,"optionDescription":"Days enum = {MON, TUE, WED, THU, FRI, SAT, SUN}"}  ],
+  "answer": 1,
+  "qDescription": "How do you define an enum that represents days of the week?",
+  "qCategory": "Java",
+  "qMarks": 2
+}
+
+{
+  "options": [
+    {"optionNumber":1,"optionDescription":"Object"},
+    {"optionNumber":2,"optionDescription":"Class"}  ],
+  "answer": 2,
+  "qDescription": "In Java, every method must be part of ...?",
+  "qCategory": "Java",
+  "qMarks": 1
+}
+
+{
+  "options": [
+    {"optionNumber":1,"optionDescription":"+"},
+    {"optionNumber":2,"optionDescription":"*"}  ],
+  "answer": 1,
+  "qDescription": "Which operator is used for arithmetic addition in Java?",
+  "qCategory": "Java",
+  "qMarks": 1
+}
