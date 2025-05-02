@@ -2,7 +2,9 @@ docker run -d --name config-server-container --network quiz-network -p 8888:8888
 
 docker run -d --name service-registery-container --network quiz-network --env-file .env-dev -p 8761:8761 service-registery-image:v1
 
-docker run -d --name questionsdb-container --network quiz-network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=mahsan -e POSTGRES_DB=questionsdb -v C:\Users\ahsan\OneDrive\Desktop\questions-sql-script:/docker-entrypoint-initdb.d -p 5432:5432 postgres:17
+docker volume create questions-volume
+
+docker run -d --name questionsdb-container --network quiz-network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=mahsan -e POSTGRES_DB=questionsdb -v questions-volume:/var/lib/postgresql/data -v C:\Users\ahsan\OneDrive\Desktop\docker-setup-files\questions-sql-script:/docker-entrypoint-initdb.d -p 5432:5432 postgres:17
 
 docker run -d --name questions-service-container --network quiz-network --env-file .env-dev -p 8081:8081 questions-service-image:v1
 
@@ -38,11 +40,14 @@ alter sequence ot_seq owned by options_table.id;
  option_description | character varying(255) |           | not null |
 
 ### Running quizDb Container from postgres:17 image ###
-docker run -d --name quizdb-container --network quiz-network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=mahsan -e POSTGRES_DB=quizdb -v C:\Users\ahsan\OneDrive\Desktop\quiz-sql-script:/docker-entrypoint-initdb.d -p 5430:5432 postgres:17
+
+docker volume create quiz-volume
+docker run -d --name quizdb-container --network quiz-network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=mahsan -e POSTGRES_DB=quizdb -v quiz-volume:/var/lib/postgresql/data -v C:\Users\ahsan\OneDrive\Desktop\docker-setup-files\quiz-sql-script:/docker-entrypoint-initdb.d -p 5430:5432 postgres:17
 
 docker run -d --name quiz-service-container --network quiz-network --env-file .env-dev -p 8083:8083 quiz-service-image:v1
 
 docker build -t api-gateway-image:v1 .
+
 docker run -d --name api-gateway-container --network quiz-network --env-file .env-dev -p 8765:8765 api-gateway-image:v1
 
 
